@@ -24,6 +24,7 @@ module.exports = {
     // externals: "all"
     externals: ["knex", "sharp"],
     // Set default file extensions to use the raw-loader with
-    rawFileExtensions: ["pem", "txt"]
+    rawFileExtensions: ["pem", "txt"],
+    sourceType: "module" // "script" | "module" | "unambiguous"
   }
 };
