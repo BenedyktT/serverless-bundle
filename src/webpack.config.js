@@ -10,6 +10,7 @@ const ConcatTextPlugin = require("concat-text-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 const config = require("./config");
 
@@ -368,7 +369,18 @@ module.exports = ignoreWarmupPlugin({
       }
     : // Don't minimize in production
       // Large builds can run out of memory
-      { minimize: false },
+      {
+        minimizer: [
+          new TerserPlugin({
+            terserOptions: {
+              mangle: false,
+              keep_classnames: true,
+              keep_fnames: true
+            }
+          })
+        ],
+        minimize: false
+      },
   plugins: plugins(),
   node: {
     __dirname: false
